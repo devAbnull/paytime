@@ -6,17 +6,17 @@ type Description = String
 
 data Transaction = Transaction { transactionAmount :: Amount
                                , transactionDescription :: Description}
-                               
+
+makeTransaction :: Amount -> Description -> Transaction
+makeTransaction = Transaction 
+
 applyTransaction :: Transaction -> Account -> Account
-applyTransaction (Transaction amount _) account = account + amount
+applyTransaction transaction account = account + transactionAmount transaction
 
 deposit :: Amount ->  Description -> Account -> Account
-deposit amount description = applyTransaction (Transaction amount description)
+deposit amount description  = applyTransaction (makeTransaction amount description) 
 
 withdraw :: Amount -> Description -> Account -> Account
-withdraw amount description  = applyTransaction (Transaction (- amount ) description)
+withdraw amount description = applyTransaction (makeTransaction (- amount) description) 
 
-applyTransactions :: [Transaction] -> Account -> Account
-applyTransactions [] account = account 
-applyTransactions (x:xs) acc = applyTransactions xs newAcccount
-  where newAcccount = applyTransaction x acc
+
