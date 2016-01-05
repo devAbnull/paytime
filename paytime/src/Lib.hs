@@ -3,15 +3,17 @@ module Lib where
 type Amount = Integer
 type Description = String
 
-data Account = Account { accountBalance :: Amount }
-data Transaction = Transaction { transactionAmount :: Amount
+data Account = Account { accountName :: String
+                       , accountBalance :: Amount }
+                       
+data Transaction = Transaction { transactionAmount:: Amount
                                , transactionDescription :: Description}
 
 makeTransaction :: Amount -> Description -> Transaction
 makeTransaction = Transaction 
 
 applyTransaction :: Transaction -> Account -> Account
-applyTransaction transaction account = Account {accountBalance = newAccountBalance}
+applyTransaction transaction account = account{accountBalance = newAccountBalance}
   where newAccountBalance = accountBalance account + transactionAmount transaction
 
 deposit :: Amount ->  Description -> Account -> Account
